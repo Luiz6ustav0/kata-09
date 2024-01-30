@@ -1,6 +1,6 @@
 # kata-09
 
-Solution written in Java for http://codekata.com/kata/kata09-back-to-the-checkout/
+Solution written in Java 17 for http://codekata.com/kata/kata09-back-to-the-checkout/
 
 <h2>Project Structure</h2>
 
@@ -63,6 +63,9 @@ Cons:
 
 Time for conclusion: ~4 hours
 
-The project's structure follows object-oriented principles and promotes modularization and reusability. However, there
+The working of the project can be checked using the existing unit tests.
+
+The project's structure follows object-oriented principles and promotes modularization and reusability, my goal was
+mostly to think of a more flexible way to deal with the different price strategies in a limited time. However, there
 are areas for improvement such as error handling, concurrency management, and reducing tight coupling between
 components.
