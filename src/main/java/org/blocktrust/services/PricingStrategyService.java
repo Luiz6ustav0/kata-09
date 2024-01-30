@@ -30,7 +30,7 @@ public class PricingStrategyService {
         .map(strategy -> strategy.calculatePriceForQuantity(checkoutItem.getQuantity()))
         .orElseGet(
             () -> {
-              BasicLogger.warn("No price found for item " + checkoutItem.getItemName());
+              BasicLogger.warn("No price found for item: " + checkoutItem.getItemName());
               return new PriceResultVO(BigDecimal.ZERO, BigDecimal.ZERO);
             });
   }

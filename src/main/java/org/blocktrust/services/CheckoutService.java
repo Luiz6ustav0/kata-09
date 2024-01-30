@@ -3,6 +3,7 @@ package org.blocktrust.services;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import org.blocktrust.vo.CheckoutItemVO;
 import org.blocktrust.vo.PriceResultVO;
 
@@ -12,23 +13,26 @@ public class CheckoutService {
   private BigDecimal totalPrice = BigDecimal.ZERO;
   private BigDecimal totalDiscount = BigDecimal.ZERO;
 
-  public CheckoutService(PricingStrategyService pricingService) {
+  public CheckoutService(PricingStrategyService pricingStrategyService) {
+    if (Objects.isNull(pricingStrategyService)) {
+      throw new IllegalArgumentException("Pricing service cannot be null");
+    }
     this.items = new HashMap<>();
-    this.pricingService = pricingService;
+    this.pricingService = pricingStrategyService;
   }
 
   public void scan(String item) {
     CheckoutItemVO checkoutItem = this.items.getOrDefault(item, new CheckoutItemVO(item, 0));
     checkoutItem.increaseQuantity();
     PriceResultVO updatedItemPrice = pricingService.calculatePriceFor(checkoutItem);
-    updatedTotalCheckoutPrices(checkoutItem, updatedItemPrice);
+    updatedTotalCheckoutPricesAndItems(checkoutItem, updatedItemPrice);
   }
 
   public BigDecimal getTotalPrice() {
     return totalPrice;
   }
 
-  private void updatedTotalCheckoutPrices(
+  private void updatedTotalCheckoutPricesAndItems(
       CheckoutItemVO checkoutItem, PriceResultVO updatedItemPrice) {
     this.totalPrice = this.totalPrice.subtract(checkoutItem.getPriceResultVO().totalPrice());
     this.totalDiscount =
